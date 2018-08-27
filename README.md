@@ -1,3 +1,24 @@
+# docker-compose
+#### Current working docker-compose file describes and launches three containers on
+```
+$ docker-compose up -d
+```
+1. graphql server (aka the middleman between the client and the prisma service)
+2. prisma service
+3. mysql database
+
+## Gotcha's w/ Docker-Compose
+
+#### when defining the db constant in the index.js, *the endpoint needs to point to "http://prisma:4466"*  NOT  'http://localhost:4466'.  This is because of the config we name the prisma service "prisma" on line 11 of the docker-compose file.
+
+```
+const db = new Prisma({
+  typeDefs: 'src/generated/prisma.graphql',
+  endpoint: "http://prisma:4466",
+  debug: true,
+  secret: "mysecret123",
+})
+```
 
 #### To remove old deployment; limited free tier cleanup
 ```sh
