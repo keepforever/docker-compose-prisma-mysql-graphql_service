@@ -1,0 +1,24 @@
+type User {
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+  snippits: [Snippit!]!
+  createdAt: DateTime!
+}
+
+type Snippit {
+  id: ID! @unique
+  author: User!
+  name: String!
+  type: String!
+  language: String!
+  framework: String!
+  code: String!
+  notes: String!
+  companion: [String!]!
+  keywords: [String!]!
+  reference: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
