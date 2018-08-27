@@ -8,7 +8,7 @@ const resolvers = require('./resolvers')
 
 const db = new Prisma({
   typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-  endpoint: "http://localhost:4466", // the endpoint of the Prisma API (value set in `.env`)
+  endpoint: "http://prisma:4466", // the endpoint of the Prisma API (value set in `.env`)
   debug: true, // log all GraphQL queries & mutations sent to the Prisma API
   secret: "mysecret123", // only needed if specified in `database/prisma.yml` (value set in `.env`)
 })
