@@ -7,25 +7,45 @@ const Query = {
     let stringThing
     const returnItem = await ctx.client.getAsync("testkey")
 
-    clearLog('returnItem', typeof returnItem)
+    clearLog('rediss Query: returnItem', returnItem)
+
+    clearLog('rediss Query: typeof returnItem', typeof returnItem)
 
     return JSON.parse(returnItem)
   },
   users: forwardTo("db"),
   // snippits: forwardTo("db"),
   snippits: async (parent, args, ctx, info) => {
-    
+
     // clearLog('args', args)
+
+    clearLog('hello shppits query resolver', null)
+
+    ctx.client.hmset(
+      "myhashkey", 
+      ["test keys 1", "test val 1", "test keys 2", "test val 2"], 
+      function (err, res) {
+        clearLog('HMSET res', res)
+      }
+    );
+
+    const testHgetall = await ctx.client.hgetallAsync("myhashkey");
+    
+    clearLog('testHgetall', testHgetall)
+    clearLog('inspect testHgetall', testHgetall['test keys 1'])
+
     const snippits = await ctx.db.query.snippits()
     //JSON.stringify(snippits)
     ctx.client.set("testkey", JSON.stringify(snippits), (error) => {
       if(error) {throw error}
     })
+
+
     //clearLog('hello snippits query context', ctx);
     const tempVar = ctx.client.get("testkey", (err, thing) => {
       if(err) {throw er}
       if(thing) {
-        clearLog('snippits query: thing', thing)
+        //clearLog('snippits query: thing', thing)
       }
     })
     return forwardTo("db")(parent, args, ctx, info);
