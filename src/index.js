@@ -6,7 +6,7 @@ const bluebird = require('bluebird')
 
 bluebird.promisifyAll(redis);
 
-const client = redis.createClient()
+const client = redis.createClient('6379','redis')
 
 // FYI
 // HTTP:  http://localhost:4466
