@@ -6,6 +6,15 @@ services:
     restart: always
     ports: 
      - '6379:6379'
+  app:
+    container_name: docker-prisma-graphql
+    restart: always
+    build: .
+    ports:
+      - '4000:4000'
+    links:
+      - prisma
+      - redis
   prisma:
     image: prismagraphql/prisma:1.14
     restart: always
