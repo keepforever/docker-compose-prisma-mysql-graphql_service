@@ -5,7 +5,9 @@ const redis = require('redis')
 const bluebird = require('bluebird')
 
 bluebird.promisifyAll(redis);
+// when running the gql-server ouside the docker-compse use:  const client = redis.createClient('6379', 'redis')
 
+// when running gql-server inside docker-compose use: const client = redis.createClient('6379','redis')
 const client = redis.createClient('6379','redis')
 
 // FYI
