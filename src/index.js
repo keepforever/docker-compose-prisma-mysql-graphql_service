@@ -17,7 +17,7 @@ const db = new Prisma({
   // "http://localhost:4466" used for endpoint when server is not docker-compose up'd
   // "http://prisma:4466" if server is docker-composed up
   //endpoint: "http://prisma:4466",
-  endpoint: "http://localhost:4466", // "http://prisma:4466" the endpoint of the Prisma API (value set in `.env`)
+  endpoint: "http://prisma:4466", // "http://prisma:4466" the endpoint of the Prisma API (value set in `.env`)
   debug: true, // log all GraphQL queries & mutations sent to the Prisma API
   secret: "mysecret123", // only needed if specified in `database/prisma.yml` (value set in `.env`)
 })
