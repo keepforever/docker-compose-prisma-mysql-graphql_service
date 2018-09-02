@@ -5,22 +5,18 @@ const Query = {
   rediss: async (parent, args, ctx, info) => {
     //clearLog('hello snippits query context', ctx);
     let stringThing
-    const returnItem = await ctx.client.getAsync("testkey")
-
-    clearLog('rediss Query: returnItem', returnItem)
-
-    clearLog('rediss Query: typeof returnItem', typeof returnItem)
+    const returnItem = await ctx.client.getAsync("mytestkey")
+    // const testHgetall = await ctx.client.hgetallAsync("myhashkey");
+    // clearLog('rediss Query: returnItem', returnItem)
+    // clearLog('rediss Query: typeof returnItem', typeof returnItem)
 
     return JSON.parse(returnItem)
   },
   users: forwardTo("db"),
   // snippits: forwardTo("db"),
   snippits: async (parent, args, ctx, info) => {
-
     // clearLog('args', args)
-
-    clearLog('hello shppits query resolver', null)
-
+    //clearLog('hello shppits query resolver', null)
     ctx.client.hmset(
       "myhashkey", 
       ["test keys 1", "test val 1", "test keys 2", "test val 2"], 
@@ -28,26 +24,22 @@ const Query = {
         clearLog('HMSET res', res)
       }
     );
-
-    const testHgetall = await ctx.client.hgetallAsync("myhashkey");
-    
-    clearLog('testHgetall', testHgetall)
-    clearLog('inspect testHgetall', testHgetall['test keys 1'])
-
+    // clearLog('testHgetall', testHgetall)
+    // clearLog('inspect testHgetall', testHgetall['test keys 1'])
     const snippits = await ctx.db.query.snippits()
     //JSON.stringify(snippits)
-    ctx.client.set("testkey", JSON.stringify(snippits), (error) => {
+    ctx.client.set("mytestkey", JSON.stringify(snippits), (error) => {
       if(error) {throw error}
     })
 
 
     //clearLog('hello snippits query context', ctx);
-    const tempVar = ctx.client.get("testkey", (err, thing) => {
-      if(err) {throw er}
-      if(thing) {
-        //clearLog('snippits query: thing', thing)
-      }
-    })
+    // const tempVar = ctx.client.get("testkey", (err, thing) => {
+    //   if(err) {throw er}
+    //   if(thing) {
+    //     //clearLog('snippits query: thing', thing)
+    //   }
+    // })
     return forwardTo("db")(parent, args, ctx, info);
   },
   me(parent, args, ctx, info) {
