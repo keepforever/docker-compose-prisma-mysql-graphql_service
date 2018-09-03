@@ -1,11 +1,12 @@
 # docker-compose
-#### Current working docker-compose file describes and launches three containers on
+#### Current working docker-compose file describes and launches (4) containers on
 ```
 $ docker-compose up -d
 ```
 1. graphql server (aka the middleman between the client and the prisma service)
 2. prisma service
 3. mysql database
+4. redis
 
 ## Gotcha's w/ Docker-Compose
 

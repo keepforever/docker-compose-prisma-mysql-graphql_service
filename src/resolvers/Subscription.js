@@ -1,11 +1,19 @@
 const { clearLog } = require('../utils')
-const { PUBSUB_NEW_SNIPPIT } = require('../constants')
+const { 
+  PUBSUB_NEW_SNIPPIT, PUBSUB_TEST_ALPHA 
+} = require('../constants')
 
 const Subscription = {
   snippit: {
     subscribe: (parent, args, { pubsub }) => {
       clearLog('hello SUBSCRIPTION', 'sub sub sub')
       return pubsub.asyncIterator(PUBSUB_NEW_SNIPPIT)     
+    },
+  }, 
+  ttest: {
+    subscribe: (parent, args, { pubsub }) => {
+      clearLog('hello T-TEST', 't-test sub')
+      return pubsub.asyncIterator(PUBSUB_TEST_ALPHA)     
     },
   }   
 }

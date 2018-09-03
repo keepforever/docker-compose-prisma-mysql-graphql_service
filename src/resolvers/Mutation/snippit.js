@@ -1,7 +1,7 @@
 const { getUserId } = require('../../utils')
 const { forwardTo } = require('prisma-binding')
 const { clearLog } = require('../../utils')
-const { PUBSUB_NEW_SNIPPIT } = require('../../constants')
+const { PUBSUB_NEW_SNIPPIT, PUBSUB_TEST_ALPHA } = require('../../constants')
 
 const snippit = {
   deleteSnippit: forwardTo("db"),
@@ -12,8 +12,8 @@ const snippit = {
     clearLog('CTX.pubsub', pubsub)
 
     // alerts all subscribed that a new snippit is being created
-    pubsub.publish(PUBSUB_NEW_SNIPPIT, {
-      snippit: " hello pubsub.publish()"
+    pubsub.publish(PUBSUB_TEST_ALPHA, {
+      ttest: " hello ttest pubsub.publish()"
     })
 
     // TODO, add logic to check that Seller has an availble offer allowance
