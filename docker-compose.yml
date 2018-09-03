@@ -1,17 +1,17 @@
 version: '3'
 services:
-  app:
-    container_name: docker-prisma-graphql
-    restart: always
-    build: .
-    ports:
-      - '4000:4000'
-    # depends_on:
-    #   - "redis"
-    #   - "prisma"
-    links:
-      - prisma
-      - redis
+  # app:
+  #   container_name: docker-prisma-graphql
+  #   restart: always
+  #   build: .
+  #   ports:
+  #     - '4000:4000'
+  #   # depends_on:
+  #   #   - "redis"
+  #   #   - "prisma"
+  #   links:
+  #     - prisma
+  #     - redis
   prisma:
     image: prismagraphql/prisma:1.14
     restart: always

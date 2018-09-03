@@ -1,6 +1,8 @@
 # import User, Snippit,  from "./generated/prisma.graphql"
 # import SnippitSubscriptionWhereInput, SnippitSubscriptionPayload,  from "./generated/prisma.graphql"
 
+# import Subscription.snippit from "./generated/prisma.graphql"
+
 # import Query.users from "./generated/prisma.graphql"
 # import Query.snippits from "./generated/prisma.graphql"
 # import Query.snippitsConnection from "./generated/prisma.graphql"
@@ -14,9 +16,9 @@
 # import Mutation.deleteUser from "./generated/prisma.graphql"
 
 # don't need define because it's imported above
-type Subscription {
-  snippit: String!
-}
+# type Subscription {
+#   snippit(where: SnippitSubscriptionWhereInput): SnippitSubscriptionPayload
+# }
 
 type Query {
   me: User

@@ -1,17 +1,14 @@
 version: '3'
 services:
-  redis:
-    container_name: my-redis
-    image: redis
-    restart: always
-    ports: 
-     - '6379:6379'
   app:
     container_name: docker-prisma-graphql
     restart: always
     build: .
     ports:
       - '4000:4000'
+    # depends_on:
+    #   - "redis"
+    #   - "prisma"
     links:
       - prisma
       - redis
@@ -40,5 +37,11 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
       - mysql:/var/lib/mysql
+  redis:
+    container_name: my-redis
+    image: redis
+    restart: always
+    ports: 
+     - '6379:6379'
 volumes:
   mysql:
