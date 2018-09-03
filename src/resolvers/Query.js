@@ -7,7 +7,7 @@ const Query = {
     let stringThing
     const returnItem = await ctx.client.getAsync("mytestkey")
     // const testHgetall = await ctx.client.hgetallAsync("myhashkey");
-    // clearLog('rediss Query: returnItem', returnItem)
+    clearLog('rediss Query: returnItem', returnItem)
     // clearLog('rediss Query: typeof returnItem', typeof returnItem)
 
     return JSON.parse(returnItem)
