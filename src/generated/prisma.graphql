@@ -1,7 +1,15 @@
 # source: http://localhost:4466
-# timestamp: Sun Aug 26 2018 22:00:15 GMT-0700 (Pacific Daylight Time)
+# timestamp: Mon Sep 03 2018 19:56:25 GMT-0700 (Pacific Daylight Time)
+
+type AggregateMessage {
+  count: Int!
+}
 
 type AggregateSnippit {
+  count: Int!
+}
+
+type AggregateSnippitCollection {
   count: Int!
 }
 
@@ -22,19 +30,265 @@ Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
 
+type Message implements Node {
+  id: ID!
+  author(where: UserWhereInput): User!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type MessageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MessageEdge]!
+  aggregate: AggregateMessage!
+}
+
+input MessageCreateInput {
+  text: String!
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type MessageEdge {
+  """The item at the end of the edge."""
+  node: Message!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MessageOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type MessagePreviousValues {
+  id: ID!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  node: Message
+  updatedFields: [String!]
+  previousValues: MessagePreviousValues
+}
+
+input MessageSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MessageSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MessageSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MessageSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MessageWhereInput
+}
+
+input MessageUpdateInput {
+  text: String
+  author: UserUpdateOneInput
+}
+
+input MessageWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MessageWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MessageWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MessageWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  author: UserWhereInput
+}
+
+input MessageWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
-  createUser(data: UserCreateInput!): User!
+  createSnippitCollection(data: SnippitCollectionCreateInput!): SnippitCollection!
+  createMessage(data: MessageCreateInput!): Message!
   createSnippit(data: SnippitCreateInput!): Snippit!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createUser(data: UserCreateInput!): User!
+  updateSnippitCollection(data: SnippitCollectionUpdateInput!, where: SnippitCollectionWhereUniqueInput!): SnippitCollection
+  updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
   updateSnippit(data: SnippitUpdateInput!, where: SnippitWhereUniqueInput!): Snippit
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteSnippitCollection(where: SnippitCollectionWhereUniqueInput!): SnippitCollection
+  deleteMessage(where: MessageWhereUniqueInput!): Message
   deleteSnippit(where: SnippitWhereUniqueInput!): Snippit
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  upsertSnippitCollection(where: SnippitCollectionWhereUniqueInput!, create: SnippitCollectionCreateInput!, update: SnippitCollectionUpdateInput!): SnippitCollection!
+  upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   upsertSnippit(where: SnippitWhereUniqueInput!, create: SnippitCreateInput!, update: SnippitUpdateInput!): Snippit!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManySnippitCollections(data: SnippitCollectionUpdateInput!, where: SnippitCollectionWhereInput): BatchPayload!
+  updateManyMessages(data: MessageUpdateInput!, where: MessageWhereInput): BatchPayload!
   updateManySnippits(data: SnippitUpdateInput!, where: SnippitWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  deleteManySnippitCollections(where: SnippitCollectionWhereInput): BatchPayload!
+  deleteManyMessages(where: MessageWhereInput): BatchPayload!
   deleteManySnippits(where: SnippitWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -65,12 +319,18 @@ type PageInfo {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  snippitCollections(where: SnippitCollectionWhereInput, orderBy: SnippitCollectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SnippitCollection]!
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
   snippits(where: SnippitWhereInput, orderBy: SnippitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Snippit]!
-  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  snippitCollection(where: SnippitCollectionWhereUniqueInput!): SnippitCollection
+  message(where: MessageWhereUniqueInput!): Message
   snippit(where: SnippitWhereUniqueInput!): Snippit
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user(where: UserWhereUniqueInput!): User
+  snippitCollectionsConnection(where: SnippitCollectionWhereInput, orderBy: SnippitCollectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SnippitCollectionConnection!
+  messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
   snippitsConnection(where: SnippitWhereInput, orderBy: SnippitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SnippitConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -93,6 +353,338 @@ type Snippit implements Node {
   reference: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type SnippitCollection implements Node {
+  id: ID!
+  name: String!
+  author(where: UserWhereInput): User!
+  snippits(where: SnippitWhereInput, orderBy: SnippitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Snippit!]
+  language: String!
+  framework: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type SnippitCollectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SnippitCollectionEdge]!
+  aggregate: AggregateSnippitCollection!
+}
+
+input SnippitCollectionCreateInput {
+  name: String!
+  language: String!
+  framework: String!
+  author: UserCreateOneInput!
+  snippits: SnippitCreateManyInput
+}
+
+"""An edge in a connection."""
+type SnippitCollectionEdge {
+  """The item at the end of the edge."""
+  node: SnippitCollection!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SnippitCollectionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  language_ASC
+  language_DESC
+  framework_ASC
+  framework_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type SnippitCollectionPreviousValues {
+  id: ID!
+  name: String!
+  language: String!
+  framework: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SnippitCollectionSubscriptionPayload {
+  mutation: MutationType!
+  node: SnippitCollection
+  updatedFields: [String!]
+  previousValues: SnippitCollectionPreviousValues
+}
+
+input SnippitCollectionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SnippitCollectionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SnippitCollectionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SnippitCollectionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SnippitCollectionWhereInput
+}
+
+input SnippitCollectionUpdateInput {
+  name: String
+  language: String
+  framework: String
+  author: UserUpdateOneInput
+  snippits: SnippitUpdateManyInput
+}
+
+input SnippitCollectionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SnippitCollectionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SnippitCollectionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SnippitCollectionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  language: String
+
+  """All values that are not equal to given value."""
+  language_not: String
+
+  """All values that are contained in given list."""
+  language_in: [String!]
+
+  """All values that are not contained in given list."""
+  language_not_in: [String!]
+
+  """All values less than the given value."""
+  language_lt: String
+
+  """All values less than or equal the given value."""
+  language_lte: String
+
+  """All values greater than the given value."""
+  language_gt: String
+
+  """All values greater than or equal the given value."""
+  language_gte: String
+
+  """All values containing the given string."""
+  language_contains: String
+
+  """All values not containing the given string."""
+  language_not_contains: String
+
+  """All values starting with the given string."""
+  language_starts_with: String
+
+  """All values not starting with the given string."""
+  language_not_starts_with: String
+
+  """All values ending with the given string."""
+  language_ends_with: String
+
+  """All values not ending with the given string."""
+  language_not_ends_with: String
+  framework: String
+
+  """All values that are not equal to given value."""
+  framework_not: String
+
+  """All values that are contained in given list."""
+  framework_in: [String!]
+
+  """All values that are not contained in given list."""
+  framework_not_in: [String!]
+
+  """All values less than the given value."""
+  framework_lt: String
+
+  """All values less than or equal the given value."""
+  framework_lte: String
+
+  """All values greater than the given value."""
+  framework_gt: String
+
+  """All values greater than or equal the given value."""
+  framework_gte: String
+
+  """All values containing the given string."""
+  framework_contains: String
+
+  """All values not containing the given string."""
+  framework_not_contains: String
+
+  """All values starting with the given string."""
+  framework_starts_with: String
+
+  """All values not starting with the given string."""
+  framework_not_starts_with: String
+
+  """All values ending with the given string."""
+  framework_ends_with: String
+
+  """All values not ending with the given string."""
+  framework_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  author: UserWhereInput
+  snippits_every: SnippitWhereInput
+  snippits_some: SnippitWhereInput
+  snippits_none: SnippitWhereInput
+}
+
+input SnippitCollectionWhereUniqueInput {
+  id: ID
 }
 
 """A connection to a list of items."""
@@ -124,6 +716,11 @@ input SnippitCreateInput {
 
 input SnippitCreatekeywordsInput {
   set: [String!]
+}
+
+input SnippitCreateManyInput {
+  create: [SnippitCreateInput!]
+  connect: [SnippitWhereUniqueInput!]
 }
 
 input SnippitCreateManyWithoutAuthorInput {
@@ -235,6 +832,19 @@ input SnippitUpdatecompanionInput {
   set: [String!]
 }
 
+input SnippitUpdateDataInput {
+  name: String
+  type: String
+  language: String
+  framework: String
+  code: String
+  notes: String
+  companion: SnippitUpdatecompanionInput
+  keywords: SnippitUpdatekeywordsInput
+  reference: SnippitUpdatereferenceInput
+  author: UserUpdateOneWithoutSnippitsInput
+}
+
 input SnippitUpdateInput {
   name: String
   type: String
@@ -250,6 +860,15 @@ input SnippitUpdateInput {
 
 input SnippitUpdatekeywordsInput {
   set: [String!]
+}
+
+input SnippitUpdateManyInput {
+  create: [SnippitCreateInput!]
+  connect: [SnippitWhereUniqueInput!]
+  disconnect: [SnippitWhereUniqueInput!]
+  delete: [SnippitWhereUniqueInput!]
+  update: [SnippitUpdateWithWhereUniqueNestedInput!]
+  upsert: [SnippitUpsertWithWhereUniqueNestedInput!]
 }
 
 input SnippitUpdateManyWithoutAuthorInput {
@@ -277,9 +896,20 @@ input SnippitUpdateWithoutAuthorDataInput {
   reference: SnippitUpdatereferenceInput
 }
 
+input SnippitUpdateWithWhereUniqueNestedInput {
+  where: SnippitWhereUniqueInput!
+  data: SnippitUpdateDataInput!
+}
+
 input SnippitUpdateWithWhereUniqueWithoutAuthorInput {
   where: SnippitWhereUniqueInput!
   data: SnippitUpdateWithoutAuthorDataInput!
+}
+
+input SnippitUpsertWithWhereUniqueNestedInput {
+  where: SnippitWhereUniqueInput!
+  update: SnippitUpdateDataInput!
+  create: SnippitCreateInput!
 }
 
 input SnippitUpsertWithWhereUniqueWithoutAuthorInput {
@@ -629,8 +1259,10 @@ input SnippitWhereUniqueInput {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  snippitCollection(where: SnippitCollectionSubscriptionWhereInput): SnippitCollectionSubscriptionPayload
+  message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   snippit(where: SnippitSubscriptionWhereInput): SnippitSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
@@ -657,6 +1289,11 @@ input UserCreateInput {
   email: String!
   password: String!
   snippits: SnippitCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutSnippitsInput {
@@ -741,11 +1378,26 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  snippits: SnippitUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
   password: String
   snippits: SnippitUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
 }
 
 input UserUpdateOneWithoutSnippitsInput {
@@ -760,6 +1412,11 @@ input UserUpdateWithoutSnippitsDataInput {
   name: String
   email: String
   password: String
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutSnippitsInput {

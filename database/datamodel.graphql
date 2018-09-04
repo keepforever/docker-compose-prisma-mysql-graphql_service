@@ -22,3 +22,24 @@ type Snippit {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+type SnippitCollection {
+  id: ID! @unique
+  name: String!
+  author: User!
+  snippits: [Snippit!]!
+  language: String!
+  framework: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Message {
+  id: ID! @unique
+  author: User!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+

@@ -1,6 +1,7 @@
 const { auth } = require('./Mutation/auth')
 const { snippit } = require('./Mutation/snippit')
 const { user } = require('./Mutation/user')
+const { message } = require('./Mutation/message')
 
 const { AuthPayload } = require('./AuthPayload')
 const { Query } = require('./Query')
@@ -14,6 +15,7 @@ module.exports = {
     ...auth,
     ...snippit,
     ...user,
+    ...message,
   },
   AuthPayload,
 }

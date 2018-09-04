@@ -449,3 +449,122 @@ query($orderBy: SnippitOrderByInput, $id: ID!) {
       }
     }
   }
+
+
+###########################
+#############################
+###########################
+
+mutation myCreateMessage {
+  createMessage(data:{
+    text:"heLLo 6",
+    author:{connect:{id:"cjlcvog4u000v0d47dwxjkfp4"}}
+  }) {
+    id
+    text
+    author{
+      name
+    }
+  }
+}
+
+subscription ttestSub {
+  ttest
+}
+
+subscription messageSub {
+  message{
+    text
+    createdAt
+    author{
+      id
+      name
+    }
+  }
+}
+
+# Try to write your query here
+query feedMessages {
+  messages{
+    author{
+      name
+    }
+    text
+  }
+}
+
+query feedSnippits {
+  snippits{
+    name
+  }
+}
+
+query feedUsers {
+  users{
+    id
+  }
+}
+
+query feedRediss {
+  rediss{
+    name
+  }
+}
+
+
+query feedRedis {
+  rediss {
+    author {
+      name
+    }
+  }
+}
+
+query setRediskeys {
+  snippits{
+    id
+  }
+}
+
+mutation myLogin {
+  login(email:"b", password:"b") {
+    payload{
+      user{
+        id
+      }
+      token
+    }
+  }
+}
+
+
+subscription testSub {
+	snippit
+}
+
+mutation createSnippit {
+  createSnippit(data:{
+    author:{connect:{id:"cjlcvog4u000v0d47dwxjkfp4"}}
+    name:"subscription Test 55 ",
+    language:"python",
+    code:"const henery = \"the eighth \" \n } \n",
+    type:"boiler",
+    framework:"ReactJS",
+    notes:"do it like this",
+    companion:{
+      set:["https://material-ui.com/", "www.google.com", "www.briancilenti.com"]
+    },
+    keywords:{
+      set:["server", "mutation", "css", "styling", "css modules"]
+    },
+    reference:{
+      set:["https://github.com/keepforever/itm-server", "http://www.keepforeverrecords.com"]
+    },
+  }) {
+    id
+    name
+    author{
+      name
+    }
+  }
+}

@@ -2,6 +2,9 @@ const { forwardTo } = require('prisma-binding')
 const { getUserId, clearLog } = require('../utils')
 
 const Query = {
+  messages: async (parent, args, ctx, info) => {
+    return forwardTo("db")(parent, args, ctx, info);
+  },
   rediss: async (parent, args, ctx, info) => {
     //clearLog('hello snippits query context', ctx);
     let stringThing
